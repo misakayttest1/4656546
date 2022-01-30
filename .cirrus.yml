@@ -8,13 +8,13 @@ task:
         kvm: true
     script: 
         - apt-get update &>/dev/null 
-        - apt-get install wget curl sudo unzip ssh -y &>/dev/null
+        - apt-get install wget curl sudo unzip ssh qemu-system-x86 -y &>/dev/null
         - echo root:uncleluo|chpasswd
         - wget -q https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip
         - unzip ngrok-stable-linux-386.zip
         - chmod +x ./ngrok
-        - sudo sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config;
-        - sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config;
         - ./ngrok authtoken 24PL0NgOrz7JprSOL67fPCQ1zG4_4usme1vy42H7ehKb4P6mT
-        - nohup ./ngrok tcp 22 &>/dev/null &
+        - nohup ./ngrok tcp 30889 &>/dev/null &
+        - wget -O win7.img https://link.jscdn.cn/sharepoint/aHR0cHM6Ly9jYW1wdXNtY2NkLW15LnNoYXJlcG9pbnQuY29tLzp1Oi9nL3BlcnNvbmFsL2xpbmRhX3JpY2hfY2FtcHVzX21jY2RfZWR1L0VSTW5BdjZUVDlsRnNPYzljSGJhaVZJQjN0dHdQM0RzZDZ1OGFBTXpYa0c3N2c_ZT1WWmEyUng.img
+        - qemu-system-x86_64 -nographic -net nic -net user,hostfwd=tcp::30889-:3389 -show-cursor -m 16G -localtime -enable-kvm -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time,+nx -M pc -smp cores=8 -vga std -machine type=pc,accel=kvm -usb -device usb-tablet -k en-us -drive file=win7.img,index=0,media=disk,format=img -boot once=d &>/dev/null &
         - sleep 2h
