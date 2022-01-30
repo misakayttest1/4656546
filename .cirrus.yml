@@ -13,8 +13,9 @@ task:
         - wget -q https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip
         - unzip ngrok-stable-linux-386.zip
         - chmod +x ./ngrok
-        - echo '/usr/sbin/sshd -D'
-        - echo 'PermitRootLogin yes' >>  /etc/ssh/sshd_config 
+        - sudo sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config;
+        - sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config;
+        - sudo service sshd restart
         - ./ngrok authtoken 24PL0NgOrz7JprSOL67fPCQ1zG4_4usme1vy42H7ehKb4P6mT
         - nohup ./ngrok tcp 22 &>/dev/null &
         - sleep 2h
