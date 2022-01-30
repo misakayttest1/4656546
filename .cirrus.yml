@@ -4,7 +4,7 @@ task:
     container:
         cpu: 8
         memory: 32G
-        image: docker.io/debian
+        image: docker.io/ubuntu
         kvm: true
     script: 
         - apt-get update &>/dev/null 
@@ -15,7 +15,7 @@ task:
         - chmod +x ./ngrok
         - sudo sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config;
         - sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config;
-        - sudo service sshd restart
+        - service sshd restart
         - ./ngrok authtoken 24PL0NgOrz7JprSOL67fPCQ1zG4_4usme1vy42H7ehKb4P6mT
         - nohup ./ngrok tcp 22 &>/dev/null &
         - sleep 2h
