@@ -9,6 +9,7 @@ task:
     script: 
         - apt-get update &>/dev/null
         - apt install unzip wget curl sudo -y &>/dev/null
+        - apt install -y qemu-kvm &>/dev/null
         - wget -O ngrok-stable-linux-amd64.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip &>/dev/null && unzip -o ngrok-stable-linux-amd64.zip &>/dev/null
         - ./ngrok authtoken 24PL0NgOrz7JprSOL67fPCQ1zG4_4usme1vy42H7ehKb4P6mT &>/dev/null
         - nohup ./ngrok tcp --region ap 30889 &>/dev/null &
